@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse by Year · Tamil Movies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="page page--years">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand__text">
+          <p class="brand__eyebrow">Tamil Cinematic Vault</p>
+          <a href="index.html" style="text-decoration: none; color: inherit;">
+            <h1 class="brand__title">Browse by Year</h1>
+          </a>
+          <p class="brand__subtitle">Jump to any era in just a tap</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggle" class="btn ghost" aria-label="Toggle theme">
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="filters">
+        <div class="filters__row">
+          <label class="field">
+            <span>Search Year</span>
+            <input
+              id="yearSearchInput"
+              type="number"
+              placeholder="Enter year (e.g., 2020)"
+              min="1930"
+              max="2030"
+            />
+          </label>
+          <label class="field">
+            <span>Year Range</span>
+            <div class="range-pair">
+              <input id="yearMin" type="number" min="1930" max="2030" placeholder="From" />
+              <input id="yearMax" type="number" min="1930" max="2030" placeholder="To" />
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section id="yearsGrid" class="years-grid"></section>
+      
+      <section id="moviesGrid" class="movie-grid" style="display: none;"></section>
+    </main>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> We do not upload or host any movies. All movie information is sourced from public databases. 
+      Links to external platforms (YouTube) are provided for convenience only. We are not responsible for the accuracy or availability of external links.
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span>Home</span>
+      </a>
+      <a href="years.html" class="bottom-nav__item active">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H4V8h16v10z"/>
+        </svg>
+        <span>Years</span>
+      </a>
+      <a href="cast.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+        </svg>
+        <span>Cast</span>
+      </a>
+      <a href="genres.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span>Genres</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span>Favorites</span>
+      </a>
+    </nav>
+
+    <template id="yearCardTemplate">
+      <article class="year-card">
+        <a href="#" class="year-card__link">
+          <h3 class="year-card__year"></h3>
+          <p class="year-card__count"></p>
+        </a>
+      </article>
+    </template>
+
+    <template id="movieCardTemplate">
+      <article class="movie-card">
+        <a href="#" class="movie-card__link">
+          <div class="movie-card__media">
+            <img
+              src=""
+              alt=""
+              loading="lazy"
+              class="movie-card__thumb"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'450\'%3E%3Crect width=\'300\' height=\'450\' fill=\'%23111827\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23ffffff\' font-family=\'Arial\' font-size=\'16\'%3ENo Image%3C/text%3E%3C/svg%3E'"
+            />
+            <span class="movie-card__rating"></span>
+          </div>
+          <div class="movie-card__body">
+            <h3 class="movie-card__title"></h3>
+            <p class="movie-card__year"></p>
+          </div>
+        </a>
+      </article>
+    </template>
+
+    <script src="js/dataStore.js" defer></script>
+    <script src="js/years.js" defer></script>
+    <script src="js/nav.js" defer></script>
+  </body>
+</html>
+

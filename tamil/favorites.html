@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites · Tamil Cinematic Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="page page--favorites">
+    <header class="app-header">
+      <div class="brand">
+        <h1 class="brand__title">Favorites</h1>
+      </div>
+      <div class="header-actions">
+        <button id="themeToggle" class="btn ghost" aria-label="Toggle theme">
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero compact">
+        <div>
+          <p class="eyebrow">Your curated stack</p>
+          <h2>Saved Tamil masterpieces.</h2>
+          <p class="muted">
+            Sort, filter, and refine the titles you loved. Remove any title with
+            a tap.
+          </p>
+        </div>
+        <div class="hero__actions">
+          <button id="clearFavoritesBtn" class="btn ghost">
+            Clear favorites
+          </button>
+        </div>
+      </section>
+
+      <section class="filters">
+        <div class="filters__row">
+          <label class="field">
+            <span>Search favorites</span>
+            <input
+              id="favSearchInput"
+              type="search"
+              placeholder="Filter by title, cast, director..."
+            />
+          </label>
+
+          <label class="field">
+            <span>Sort by</span>
+            <select id="favSortSelect">
+              <option value="added-desc">Recently added</option>
+              <option value="added-asc">First saved</option>
+              <option value="title-asc">Title · A → Z</option>
+              <option value="title-desc">Title · Z → A</option>
+              <option value="rating-desc">Rating · High</option>
+              <option value="rating-asc">Rating · Low</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section id="favoritesGrid" class="movie-grid empty-state">
+        <p>No favorites yet. Add movies from the main list.</p>
+      </section>
+    </main>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> We do not upload or host any movies. All movie information is sourced from public databases. 
+      Links to external platforms (YouTube) are provided for convenience only. We are not responsible for the accuracy or availability of external links.
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span>Home</span>
+      </a>
+      <a href="years.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H4V8h16v10z"/>
+        </svg>
+        <span>Years</span>
+      </a>
+      <a href="cast.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+        </svg>
+        <span>Cast</span>
+      </a>
+      <a href="genres.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span>Genres</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav__item active">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span>Favorites</span>
+      </a>
+    </nav>
+
+    <script src="js/dataStore.js" defer></script>
+    <script src="js/favorites.js" defer></script>
+    <script src="js/nav.js" defer></script>
+  </body>
+</html>
+
