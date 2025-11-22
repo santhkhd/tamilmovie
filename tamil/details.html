@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Profile · Tamil Cinematic Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="page page--details">
+    <header class="app-header">
+      <a class="btn ghost" href="index.html">← Back</a>
+      <div class="header-actions">
+        <button id="themeToggle" class="btn ghost" aria-label="Toggle theme">
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <main id="detailsRoot" class="details-root">
+      <div style="text-align: center; padding: 2rem; color: var(--muted);">
+        Loading movie details...
+      </div>
+    </main>
+
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> We do not upload or host any movies. All movie information is sourced from public databases. 
+      Links to external platforms (YouTube) are provided for convenience only. We are not responsible for the accuracy or availability of external links.
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span>Home</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav__item">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span>Favorites</span>
+      </a>
+      <a href="details.html?id=random" class="bottom-nav__item active">
+        <svg viewBox="0 0 24 24">
+          <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+        </svg>
+        <span>Random</span>
+      </a>
+    </nav>
+
+    <script src="js/dataStore.js" defer></script>
+    <script src="js/details.js" defer></script>
+    <script src="js/nav.js" defer></script>
+  </body>
+</html>
+
