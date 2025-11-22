@@ -55,7 +55,7 @@
     const year = Number(item.year) || null;
     const rating = Number(item.rating) || null;
     const rawPoster = item.poster || item.image;
-    const defaultImg = "/default.png";
+    const defaultImg = "tamil/default.png";
     const poster = rawPoster
       ? upgradeAmazonImageUrl(rawPoster)
       : defaultImg;

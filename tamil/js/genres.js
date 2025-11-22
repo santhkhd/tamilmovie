@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     const fragment = document.createDocumentFragment();
-    const defaultImg = "/default.png";
+    const defaultImg = "tamil/default.png";
 
     movies.forEach(movie => {
       const card = els.movieTemplate.content.cloneNode(true);
