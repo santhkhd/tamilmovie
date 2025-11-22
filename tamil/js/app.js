@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     slice.forEach((movie) => {
       const card = els.template.content.cloneNode(true);
       const img = card.querySelector("img");
-      const defaultImg = "default.png";
+      const defaultImg = "/default.png";
 
       img.src = movie.poster || defaultImg;
       img.alt = `${movie.title} poster`;

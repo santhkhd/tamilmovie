@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       card.className = "movie-card";
       card.innerHTML = `
         <div class="movie-card__media">
-          <img src="${movie.poster || 'default.png'}" alt="${movie.title}" loading="lazy" onerror="this.src='default.png'" />
+          <img src="${movie.poster || '/default.png'}" alt="${movie.title}" loading="lazy" onerror="this.src='/default.png'" />
           <span class="movie-card__rating">${
             movie.rating ? `${movie.rating.toFixed(1)} ★` : "NR"
           }</span>

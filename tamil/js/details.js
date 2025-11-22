@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.title = `${movie.title} · Tamil Movies`;
 
-  const defaultImg = "default.png";
+  const defaultImg = "/default.png";
   
   const hero = document.createElement("section");
   hero.className = "details-hero";
