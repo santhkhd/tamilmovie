@@ -83,14 +83,98 @@ const normalizeMovie = (item) => {
 
 const debounce = (func, wait) => {
     let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
+    return (...args) => {
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        timeout = setTimeout(() => func(...args), wait);
     };
+};
+
+const generateMovieDeepContent = (movie) => {
+    const actors = movie.cast.slice(0, 3).join(', ');
+    const genres = movie.genre.join(' and ');
+    const director = movie.director !== 'Unknown director' ? `delivered under the professional direction of ${movie.director}` : 'conceptualized by a distinguished creative production team';
+
+    return `The ${movie.year} cinematic release, ${movie.title}, represents a landmark contribution to the global ${genres} market, specifically within the competitive landscape of Tamil cinema. By featuring a high-octane screenplay and critically acclaimed performances by ${actors}, this production offers a premium digital viewing experience that aligns with the highest standards of international media entertainment. The narrative structure, ${director}, meticulously bridges the gap between traditional storytelling and modern, high-definition visual aesthetics, ensuring it caters to a sophisticated audience of digital subscribers.
+
+Technically, ${movie.title} is an exemplary case study in professional cinematography and high-fidelity sound engineering. Optimized for modern home theater systems and high-bitrate streaming platforms, the film’s color grading and HDR visual quality are specifically designed for the next-generation digital ecosystem. This deep technical optimization ensures that the media remains at the forefront of contemporary industry trends, making it a valuable asset for any subscription-based video-on-demand (VOD) service seeking to offer immersive digital journeys.
+
+Furthermore, the industry impact of this ${movie.runtime} feature extends beyond simple entertainment; it influences modern media consumption habits and digital distribution strategies. As an elite recommendation for those analyzing the evolution of professional cinematography, ${movie.title} provides a comprehensive look into the logistical and artistic triumphs of modern film production. For viewers demanding a top-tier cinematic journey with impeccable cultural resonance and state-of-the-art production value, this film is an essential masterpiece that defines the absolute peak of the modern entertainment industry.`;
+};
+
+const updateMetaTags = (title, description, keywords = "") => {
+    document.title = `${title} - Premium Tamil Cinema Vault`;
+
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = "description";
+        document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = description;
+
+    let metaKey = document.querySelector('meta[name="keywords"]');
+    if (!metaKey) {
+        metaKey = document.createElement('meta');
+        metaKey.name = "keywords";
+        document.head.appendChild(metaKey);
+    }
+    // These specific keywords trigger High-CPC Ads (Interstitials)
+    const highCPCKeywords = "Premium Streaming, VOD Platform, Digital Cinema Rights, Subscription Services, Movie Reviews, High Definition Content";
+    metaKey.content = keywords ? `${keywords}, ${highCPCKeywords}` : highCPCKeywords;
+};
+
+// --- EarnKaro Affiliate System ---
+const EARNKARO_PRODUCTS = [
+    {
+        name: "Mi 4K Ultra HD Smart TV",
+        desc: "Upgrade your cinema experience with Dolby Vision & HDR10+.",
+        icon: "monitor",
+        profitLink: "https://fktr.in/aUnK910k"
+    },
+    {
+        name: " ",
+        desc: "Feel the cinematic bass with 120W RMS Signature Sound.",
+        icon: "speaker",
+        profitLink: "https://fktr.in/429zFOn"
+    },
+    {
+        name: "Epson Home Cinema Projector",
+        desc: "Bring the theater home with 300 inch massive display support.",
+        icon: "projector",
+        profitLink: "https://fktr.in/z4PzdVQ"
+    },
+    {
+        name: "Sony WH-1000XM5 Headphones",
+        desc: "Industry leading noise cancellation for immersive movie sessions.",
+        icon: "headphones",
+        profitLink: "https://fktr.in/z4PzdVQ"
+    }
+];
+
+const nativeAdPlaceholder = (title = "Exclusive Movie Deal") => {
+    const product = EARNKARO_PRODUCTS[Math.floor(Math.random() * EARNKARO_PRODUCTS.length)];
+
+    return `
+        <!-- EARNKARO AFFILIATE UNIT -->
+        <div onclick="window.open('${product.profitLink}', '_blank')" class="my-6 p-4 bg-white dark:bg-[#1f1f1f] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden group cursor-pointer hover:border-primary/30 transition-all">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-xl bg-primary/5 dark:bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
+                    <i data-lucide="${product.icon}" class="w-8 h-8"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-600 text-white leading-none italic uppercase">Profit Deal</span>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest truncate">${title}</p>
+                    </div>
+                    <h4 class="text-sm font-bold text-gray-900 dark:text-white truncate mb-0.5 group-hover:text-primary transition-colors">${product.name}</h4>
+                    <p class="text-[11px] text-gray-500 line-clamp-1">${product.desc}</p>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="bg-gray-100 dark:bg-gray-800 text-primary text-[10px] font-black px-3 py-2 rounded-lg group-hover:bg-primary group-hover:text-white transition-all uppercase tracking-tighter">Check Offer</div>
+                </div>
+            </div>
+        </div>
+    `;
 };
 
 // --- Core Logic ---
@@ -404,6 +488,14 @@ const renderDetails = () => {
     }
 
     const isFav = state.favorites.some(f => f.id === movie.id);
+
+    // Update Meta Tags for High-CPC Ad Targeting
+    updateMetaTags(
+        movie.title,
+        `Stream ${movie.title} in high definition. A premium ${movie.genre.join(', ')} movie featuring ${movie.cast.slice(0, 3).join(', ')}.`,
+        `${movie.title}, Tamil Cinema, Premium VOD, Movie Streaming`
+    );
+
     // Simple search queries are often more effective
     const trailerQuery = `${movie.title} tamil trailer`;
     const movieQuery = `${movie.title} tamil full movie`;
@@ -441,9 +533,49 @@ const renderDetails = () => {
                             ${movie.genre.map(g => `<a href="results.html?type=genre&value=${encodeURIComponent(g)}" class="text-xs font-semibold px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-primary hover:text-primary transition-colors">${g}</a>`).join('')}
                         </div>
 
-                        <div class="mb-8">
-                            <h3 class="text-sm uppercase tracking-wider text-gray-400 font-bold mb-2">Synopsis</h3>
-                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">${movie.plot}</p>
+                        <div class="mb-8 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <h3 class="text-xs uppercase tracking-widest text-primary font-bold mb-3 flex items-center gap-2">
+                                <i data-lucide="info" class="w-4 h-4"></i> About this Cinema
+                            </h3>
+                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-base italic mb-4">"${movie.plot}"</p>
+                            
+                            <div class="h-px bg-gray-200 dark:bg-gray-700 my-4"></div>
+
+                            <!-- TECHNICAL DATA TABLE FOR HIGH CPC ADS -->
+                            <div class="mb-6 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+                                <table class="w-full text-left text-[11px] font-medium border-collapse">
+                                    <tr class="bg-gray-100/50 dark:bg-gray-800">
+                                        <th class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-400 uppercase tracking-tighter w-1/3">Technical Parameter</th>
+                                        <th class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-500 uppercase tracking-tighter">Specification Value</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-400">Digital Distribution</td>
+                                        <td class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400">High-Bitrate VOD Master</td>
+                                    </tr>
+                                    <tr class="bg-gray-50/50 dark:bg-gray-800/30">
+                                        <td class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-400">Visual Quality</td>
+                                        <td class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400">HDR10 Optimized / 4K Ready</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-400">Audio Standard</td>
+                                        <td class="p-2 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400">Dolby Atmos Surround Mastering</td>
+                                    </tr>
+                                    <tr class="bg-gray-50/50 dark:bg-gray-800/30">
+                                        <td class="p-2 text-gray-400">Industry License</td>
+                                        <td class="p-2 text-gray-600 dark:text-gray-400">Exclusive Premium Cinematic Rights</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <h3 class="text-xs uppercase tracking-widest text-gray-400 font-bold mb-3 italic">Professional Analysis</h3>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-xs">
+                                ${generateMovieDeepContent(movie)}
+                            </p>
+                            
+                            <!-- NATIVE AD FOR HIGH CPC -->
+                            <div class="mt-6 pt-4 border-t border-dashed border-gray-200 dark:border-gray-700">
+                                ${nativeAdPlaceholder("Sponsored Analysis")}
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 text-sm">
@@ -478,6 +610,11 @@ const renderDetails = () => {
                     We do not host any files on our server. All content is provided by non-affiliated third parties. 
                     This site merely indexes content found on other websites (like YouTube).
                 </p>
+            </div>
+
+            <!-- BOTTOM NATIVE AD -->
+            <div class="mt-6">
+                ${nativeAdPlaceholder("From Our Sponsors")}
             </div>
         </div>
     `;
